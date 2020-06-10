@@ -18,17 +18,10 @@
 #        You should have received a copy of the GNU General Public License
 #        along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#blue start 
-	BS="-e \033[1;34m"
-#color end
-	CE="\033[0m"
-#red start
-	RS="\033[1;31m"
-	C="\033[0m"
-#green start
-	GN="\033[1;32m"
-#white start
-        WHS="\033[0m"
+G="\033[1;34m[*] \033[0m"
+S="\033[1;32m[+] \033[0m"
+I="\033[1;77m[i] \033[0m"
+E="\033[1;31m[-] \033[0m"
 
 if [[ -d /data/data/com.termux ]]
 then
@@ -47,24 +40,20 @@ UPD="false"
 fi
 fi
 {
-ASESR="$( ping -c 1 -q google.com >&/dev/null; echo $? )"
+ASESR="$(ping -c 1 -q www.google.com >&/dev/null; echo $?)"
 } &> /dev/null
 if [[ "$ASESR" != 0 ]]
 then 
-   sleep 1
-   echo -e ""$RS"[-] "$WHS"No Internet connection!"$CE""
-   sleep 1
+   echo -e ""$E"No Internet connection!"
    exit
 fi
-if [[ $EUID -ne 0 ]]
+if [[ $(id -u) != 0 ]]
 then
-sleep 1
-echo -e ""$RS"[-]"$CE" Permission denied!"$CE""
-sleep 1
-exit
+   echo -e ""$E"Permission denied!"
+   exit
 fi
 sleep 1
-echo -e ""$BS"[*]"$CE" Installing update..."$CE""
+echo -e ""$G"Installing update..."
 {
 rm -rf ~/ghost
 rm /bin/ghost
@@ -81,7 +70,12 @@ chmod +x install.sh
 ./install.sh
 fi
 } &> /dev/null
-echo -e ""$GN"[+]"$CE" Successfully updated!"$CE""
+if [[ ! -d ~/ghost ]]
+then
+   echo -e ""$E"Installation failed!"
+   exit
+fi
+echo -e ""$S"Successfully updated!"
 cd .
 touch .updated
 sleep 1

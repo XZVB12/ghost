@@ -18,20 +18,32 @@
 #        You should have received a copy of the GNU General Public License
 #        along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-G="\033[1;34m[*] \033[0m"
-E="\033[1;31m[-] \033[0m"
-
-{
-chr=$(adb shell which su)
-} &> /dev/null
-
-if [[ $chr = "" ]]; then
-    echo -e ""$E"Target device is not rooted!"
+if [[ "$1" = "" ]] 
+then
+    echo -e "Usage: dctl.sh [connect|disconnect] <target>"
 else
-    echo -e ""$G"Connecting to device..."
-    sleep 0.5
-    echo -e ""$G"Openning device shell..."
-    sleep 1
-    echo -e ""$G"Running shell as root..."
-    adb shell su
+    if [[ "$1" = "connect" ]]
+    then
+        if [[ "$2" = "" ]]
+        then
+            echo -e "Usage: dctl.sh [connect|disconnect] <target>"
+        else
+            {
+            adb connect $2
+            sleep 1
+            } &> /dev/null
+        fi
+    elif [[ "$1" = "disconnect" ]]
+    then
+        if [[ "$2" = "" ]]
+        then
+            echo -e "Usage: dctl.sh [connect|disconnect] <target>"
+        else
+            {
+            adb disconnect $2
+            } &> /dev/null
+        fi
+    else
+        echo -e "Usage: dctl.sh [connect|disconnect] <target>"
+    fi
 fi

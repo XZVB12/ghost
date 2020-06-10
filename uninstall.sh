@@ -18,27 +18,16 @@
 #        You should have received a copy of the GNU General Public License
 #        along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-RS="\033[1;31m"
-CE="\033[0m"
-
-#blue start 
-	BS="\033[1;34m"
-#color end
-	CE="\033[0m"
-#red start
-	RS="\033[1;31m"
-#green start
-	GN="\033[1;32m"
-#white start
-   WHS="\033[0m"
-
 printf '\033]2;uninstall.sh\a'
 
-if [[ $EUID -ne 0 ]]
+G="\033[1;34m[*] \033[0m"
+S="\033[1;32m[+] \033[0m"
+I="\033[1;77m[i] \033[0m"
+E="\033[1;31m[-] \033[0m"
+
+if [[ $(id -u) != 0 ]]
 then
-   sleep 1
-   echo -e ""$RS"[-]"$CE" This script must be run as root!"$CE"" 1>&2
-   sleep 1
+   echo -e ""$E"Permission denied!"
    exit
 fi
 

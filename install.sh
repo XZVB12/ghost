@@ -18,59 +18,36 @@
 #        You should have received a copy of the GNU General Public License
 #        along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-RS="\033[1;31m"
-CE="\033[0m"
-
 printf '\033]2;install.sh\a'
 
-#blue start 
-	BS="\033[1;34m"
-#color end
-	CE="\033[0m"
-#red start
-	RS="\033[1;31m"
-#green start
-	GN="\033[1;32m"
-#white start
-   WHS="\033[0m"
+G="\033[1;34m[*] \033[0m"
+S="\033[1;32m[+] \033[0m"
+I="\033[1;77m[i] \033[0m"
+E="\033[1;31m[-] \033[0m"
 
-if [[ $EUID -ne 0 ]]
+if [[ $(id -u) != 0 ]]
 then
-   sleep 1
-   echo -e ""$RS"[-]"$CE" This script must be run as root!"$CE"" 1>&2
-   sleep 1
+   echo -e ""$E"Permission denied!"
    exit
 fi
 
 {
-ASESR="$( ping -c 1 -q google.com >&/dev/null; echo $? )"
+ASESR="$(ping -c 1 -q www.google.com >&/dev/null; echo $?)"
 } &> /dev/null
 if [[ "$ASESR" != 0 ]]
 then 
-   sleep 1
-   echo -e ""$RS"[-] "$WHS"No Internet connection!"$CE""
-   sleep 1
+   echo -e ""$E"No Internet connection!"
    exit
 fi
 
-if [[ -d ~/ghost ]]
-then
-sleep 0
-else
-cd ~
-{
-git clone https://github.com/entynetproject/ghost.git
-} &> /dev/null
-fi
 sleep 0.5
 clear
 sleep 0.5
-cd ~/ghost
 cat banner/banner.txt
 echo
 
 sleep 1
-echo -e ""$BS"[*]"$CE" Installing dependencies..."$C""
+echo -e ""$G"Installing dependencies..."
 sleep 1
 
 {
@@ -82,6 +59,8 @@ apt-get update
 apt-get -y install git
 apt-get -y install python3
 apt-get -y install adb
+apt-get -y install android-tools-adb
+apt-get -y install android-tools-fastboot
 apk update
 apk add git
 apk add python3
@@ -110,8 +89,26 @@ xbps-install -y python3
 xbps-install -y android-tools
 } &> /dev/null
 
+if [[ -d ~/ghost ]]
+then
+sleep 0
+else
+cd ~
 {
-cd ~/ghost/bin
+git clone https://github.com/entynetproject/ghost.git
+} &> /dev/null
+fi
+
+if [[ -d ~/ghost ]]
+then
+cd ~/ghost
+else
+echo -e ""$E"Installation failed!"
+exit
+fi
+
+{
+cd bin
 cp ghost /usr/local/bin
 chmod +x /usr/local/bin/ghost
 cp ghost /bin
@@ -121,5 +118,5 @@ chmod +x /data/data/com.termux/files/usr/bin/ghost
 } &> /dev/null
 
 sleep 1
-echo -e ""$GN"[+]"$CE" Successfully installed!"$C""
+echo -e ""$S"Successfully installed!"
 sleep 1

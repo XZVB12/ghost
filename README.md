@@ -23,7 +23,7 @@
  </a>
 </p>
 
-![ghost](https://user-images.githubusercontent.com/54115104/80290030-7ac13200-874b-11ea-9f1f-1ce39e6d3461.png)
+![ghost](https://user-images.githubusercontent.com/54115104/83800104-922afd80-a6af-11ea-94c8-224550d0db1e.png)
 
 ***
 
@@ -60,8 +60,8 @@ gives you the power and convenience of remote Android device administration.
 # Ghost Framework execution
 
 ```
-To execute Ghost Framework you
-should execute the following command.
+To run Ghost Framework you should 
+execute the following command.
 ```
 
 > ghost
@@ -78,11 +78,11 @@ It is easy to understand and it will be easier
 for you to master the Ghost Framework.
 ```
 
-* Device password removal.
+* Device passcode removal.
 
 ```
-Ghost Framework can be used to remove the remote 
-Android device password if it was forgotten.
+Ghost Framework can be used to remotely remove the 
+passcode of an Android device if it has been forgotten.
 ```
 
 * Device shell access.
@@ -92,7 +92,7 @@ Ghost Framework can be used to access the remote Android
 device shell without using OpenSSH or other protocols.
 ``` 
 
-![shell](https://user-images.githubusercontent.com/54115104/80290031-7c8af580-874b-11ea-9d07-7dfb365284d5.png)
+![shell](https://user-images.githubusercontent.com/54115104/83800108-92c39400-a6af-11ea-8963-5714aaf40756.png)
 
 ***
 
